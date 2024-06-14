@@ -1,11 +1,11 @@
-# Use an Ubuntu base image
-FROM ubuntu:latest
+# Use a specific Ubuntu base image
+FROM ubuntu:20.04
 
 # Set environment variables to avoid interaction
 ENV DEBIAN_FRONTEND=noninteractive \
     TZ=UTC
 
-# Install system dependencies
+# Install system dependencies and clean up
 RUN apt-get update && \
     apt-get install -y \
     build-essential \
@@ -26,10 +26,12 @@ RUN apt-get update && \
     wget \
     python3 \
     python3-pip \
-    git
+    git && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install Meson, Ninja, and Cython using pip
-RUN python3 -m pip install meson ninja
+RUN python3 -m pip install --no-cache-dir meson ninja
 
 # Set environment variables
 ENV CC=/usr/bin/clang
