@@ -29,7 +29,7 @@ RUN apt-get update && \
     git
 
 # Install Meson, Ninja, and Cython using pip
-RUN python -m pip install meson ninja
+RUN python3 -m pip install meson ninja
 
 # Set environment variables
 ENV CC=/usr/bin/clang
